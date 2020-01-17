@@ -6,8 +6,9 @@ import numpy as np
 
 w = 9
 h = 6
+dimensions_in_mm = 26
 
-criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 26, 0.001)
+criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, dimensions_in_mm, 0.001)
 
 objp = np.zeros((w*h,3), np.float32)
 objp[:,:2] = np.mgrid[0:w,0:h].T.reshape(-1,2)
@@ -32,8 +33,8 @@ for (image_path_l, image_path_r) in zip(image_paths_l, image_paths_r):
     gray_l = cv2.cvtColor(image_l, cv2.COLOR_BGR2GRAY)
     gray_r = cv2.cvtColor(image_r, cv2.COLOR_BGR2GRAY)
 
-    ret_l, corners_l = cv2.findChessboardCorners(gray_l, (w, h), None, flags=flags)
-    ret_r, corners_r = cv2.findChessboardCorners(gray_r, (w, h), None, flags=flags)
+    ret_l, corners_l = cv2.findChessboardCorners(gray_l, (w, h), None, flags = flags)
+    ret_r, corners_r = cv2.findChessboardCorners(gray_r, (w, h), None, flags = flags)
 
     if ret_l == False or ret_r == False:
         continue
@@ -58,7 +59,7 @@ print("Correct image pairs: ", counter_pairs)
 
 print("Calibrating cameras...")
 
-flags = cv2.CALIB_FIX_PRINCIPAL_POINT + cv2.CALIB_FIX_ASPECT_RATIO + cv2.CALIB_ZERO_TANGENT_DIST
+flags = 0
 
 rms_left, mat_left, dist_left, r_left, t_left = cv2.calibrateCamera(objpoints, imgpoints_l, image_size_left, None, None, flags=flags)
 rms_right, mat_right, dist_right, r_right, t_right = cv2.calibrateCamera(objpoints, imgpoints_r, image_size_right, None, None, flags=flags)
