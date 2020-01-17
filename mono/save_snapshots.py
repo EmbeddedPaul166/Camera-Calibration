@@ -3,7 +3,6 @@ import time
 import sys
 import os
 
-
 def prepare_window():
     window_name = "Save snapshots"
     cv2.namedWindow(window_name, cv2.WINDOW_NORMAL)
@@ -14,8 +13,8 @@ def prepare_window():
 
 def save_snapshots():
 
-    name="snapshot"
-    folder="images/mono/"
+    name = "snapshot"
+    folder = "images/mono/"
     
     video_capture = cv2.VideoCapture("v4l2src device=/dev/video3 ! video/x-raw,format=UYVY,width=1920,height=1080,framerate=30/1 ! nvvidconv ! video/x-raw(memory:NVMM), format=I420 ! nvvidconv ! video/x-raw, format=(string)BGRx ! videoconvert ! video/x-raw,format=(string)BGR ! appsink")
     
@@ -32,11 +31,11 @@ def save_snapshots():
     except:
         pass
     
-    nSnap   = 1
+    image_count   = 1
     w       = 1920
     h       = 1080
 
-    fileName    = "%s/%s_%d_%d_" %(folder, name, w, h)
+    file_name    = "%s/%s" %(folder, name)
     while True:
         ret, frame = video_capture.read()
 
@@ -46,9 +45,9 @@ def save_snapshots():
         if key == ord('q'):
             break
         if key == ord(' '):
-            print("Saving image ", nSnap)
-            cv2.imwrite("%s%d.jpg"%(fileName, nSnap), frame)
-            nSnap += 1
+            print("Saving image ", image_count)
+            cv2.imwrite("%s%d.jpg"%(file_name, image_count), frame)
+            image_count += 1
 
     video_capture.release()
     cv2.destroyAllWindows()

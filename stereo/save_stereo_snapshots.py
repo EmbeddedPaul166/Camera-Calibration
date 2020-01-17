@@ -3,7 +3,6 @@ import time
 import sys
 import os
 
-
 def prepare_window():
     window_name = "Save snapshots"
     cv2.namedWindow(window_name, cv2.WINDOW_NORMAL)
@@ -43,7 +42,7 @@ def save_snapshots():
     except:
         pass
     
-    nSnap   = 1
+    image_count   = 1
     w       = 1920
     h       = 1080
 
@@ -61,10 +60,10 @@ def save_snapshots():
         if key == ord('q'):
             break
         if key == ord(' '):
-            print("Saving image ", nSnap)
-            cv2.imwrite("%s%d.jpg"%(file_name_left, nSnap), frame_left)
-            cv2.imwrite("%s%d.jpg"%(file_name_right, nSnap), frame_right)
-            nSnap += 1
+            print("Saving image ", image_count)
+            cv2.imwrite("%s%d.jpg"%(file_name_left, image_count), frame_left)
+            cv2.imwrite("%s%d.jpg"%(file_name_right, image_count), frame_right)
+            image_count += 1
 
     video_capture_left.release()
     cv2.destroyAllWindows()
