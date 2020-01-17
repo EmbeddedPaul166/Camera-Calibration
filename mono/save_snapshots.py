@@ -16,7 +16,7 @@ def save_snapshots():
     name = "snapshot"
     folder = "images/mono/"
     
-    video_capture = cv2.VideoCapture("v4l2src device=/dev/video3 ! video/x-raw,format=UYVY,width=1920,height=1080,framerate=30/1 ! nvvidconv ! video/x-raw(memory:NVMM), format=I420 ! nvvidconv ! video/x-raw, format=(string)BGRx ! videoconvert ! video/x-raw,format=(string)BGR ! appsink")
+    video_capture = cv2.VideoCapture("v4l2src device=/dev/video3 ! video/x-raw,format=UYVY,width=1920,height=1080,framerate=30/1 ! nvvidconv ! video/x-raw(memory:NVMM), format=I420 ! nvvidconv ! video/x-raw, format=(string)BGRx ! videoconvert ! video/x-raw,format=(string)BGR ! appsink", cv2.CAP_GSTREAMER)
     
     window_name = prepare_window()
     

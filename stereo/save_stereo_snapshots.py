@@ -18,8 +18,8 @@ def save_snapshots():
     folder_left="images/left/"
     folder_right="images/right/"
     
-    video_capture_left = cv2.VideoCapture("v4l2src device=/dev/video3 ! video/x-raw,format=UYVY,width=1920,height=1080,framerate=30/1 ! nvvidconv ! video/x-raw(memory:NVMM), format=I420 ! nvvidconv ! video/x-raw, format=(string)BGRx ! videoconvert ! video/x-raw,format=(string)BGR ! appsink")
-    video_capture_right = cv2.VideoCapture("v4l2src device=/dev/video1 ! video/x-raw,format=UYVY,width=1920,height=1080,framerate=30/1 ! nvvidconv ! video/x-raw(memory:NVMM), format=I420 ! nvvidconv ! video/x-raw, format=(string)BGRx ! videoconvert ! video/x-raw,format=(string)BGR ! appsink")
+    video_capture_left = cv2.VideoCapture("v4l2src device=/dev/video1 ! video/x-raw,format=UYVY,width=1920,height=1080,framerate=30/1 ! nvvidconv ! video/x-raw(memory:NVMM), format=I420 ! nvvidconv ! video/x-raw, format=(string)BGRx ! videoconvert ! video/x-raw,format=(string)BGR ! appsink", cv2.CAP_GSTREAMER)
+    video_capture_right = cv2.VideoCapture("v4l2src device=/dev/video3 ! video/x-raw,format=UYVY,width=1920,height=1080,framerate=30/1 ! nvvidconv ! video/x-raw(memory:NVMM), format=I420 ! nvvidconv ! video/x-raw, format=(string)BGRx ! videoconvert ! video/x-raw,format=(string)BGR ! appsink", cv2.CAP_GSTREAMER)
     
     window_name = prepare_window()
     
@@ -52,7 +52,7 @@ def save_snapshots():
         ret_left, frame_left = video_capture_left.read()
         ret_right, frame_right = video_capture_right.read()
 
-        vertical_images = cv2.hconcat([frame_right, frame_left])
+        vertical_images = cv2.hconcat([frame_left, frame_right])
         cv2.imshow(window_name, vertical_images)
 
 
@@ -70,7 +70,6 @@ def save_snapshots():
 
 def main():
     save_snapshots()
-    print("Files saved")
 
 if __name__ == "__main__":
     main()
